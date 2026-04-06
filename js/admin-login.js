@@ -1,34 +1,23 @@
-// admin-login.js
+// js/admin-login.js
 document.addEventListener('DOMContentLoaded', () => {
-// ==========================================
-// 🚨 SMART API ROUTER
-// ==========================================
-let API_BASE;
 
-if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
-    // 💻 LOCAL MODE: You are testing on your laptop
-    API_BASE = 'http://127.0.0.1:8000';
-    console.log("🔌 Connected to LOCAL Backend");
-} else {
-    // 🌍 LIVE MODE: You are on the real internet
-    API_BASE = 'https://backend-depolyment-1.onrender.com'; 
-    console.log("☁️ Connected to LIVE Cloud Backend");
-}
     const loginForm = document.getElementById('admin-login-form');
     const errorBox = document.getElementById('login-error');
+    const errorText = document.getElementById('login-error-text'); // Optional: Add this ID to a span inside your error box to show exact errors
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const email = document.getElementById('admin-email').value;
+            const email = document.getElementById('admin-email').value.toLowerCase();
             const password = document.getElementById('admin-password').value;
             const submitBtn = loginForm.querySelector('button[type="submit"]');
 
-            // Reset UI
-            if (errorBox) errorBox.style.display = 'none';
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = "Authenticating...";
+            // Reset UI (NO INLINE CSS)
+            if (errorBox) errorBox.classList.add('hidden');
+            
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = "Authenticating...";
             submitBtn.disabled = true;
 
             try {
@@ -40,25 +29,29 @@ if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'lo
                 });
 
                 if (!response.ok) {
-                    if (errorBox) errorBox.style.display = 'flex';
+                    const errorData = await response.json();
+                    if (errorBox) {
+                        errorBox.classList.remove('hidden'); // NO INLINE CSS
+                        // If you have a span for the text, inject the exact FastAPI error:
+                        if (errorText) errorText.textContent = errorData.detail || "Invalid credentials.";
+                    }
                     return;
                 }
 
                 const data = await response.json();
 
                 // 2. Save the VIP Admin Token 
-                // We use a different key name so it doesn't conflict with patient/doctor tokens 
                 localStorage.setItem('admin_access_token', data.access_token);
                 localStorage.setItem('currentAdmin', JSON.stringify(data.admin));
 
-                // 3. Teleport to Dashboard (FIXED FILENAME)
-                window.location.href = 'admin.html';
+                // 3. Teleport to Dashboard (FIXED: points to admin-dash.html and uses replace)
+                window.location.replace('admin-dash.html');
 
             } catch (error) {
                 console.error("Admin Login Error:", error);
-                alert("Server offline. Please check Uvicorn.");
+                alert("Server connection failed. The server is currently disconnected.");
             } finally {
-                submitBtn.innerHTML = originalText;
+                submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
             }
         });

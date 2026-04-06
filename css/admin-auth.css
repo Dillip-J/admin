@@ -112,3 +112,17 @@
     transition: color 0.2s;
 }
 .admin-auth-footer a:hover { color: white; }
+/* ========================================= */
+/* --- Utility Classes ---                   */
+/* ========================================= */
+
+/* Critical for JavaScript toggling the error box */
+.hidden { 
+    display: none !important; 
+}
+
+/* Base class for your alert box */
+.alert-box {
+    width: 100%;
+    box-sizing: border-box;
+}

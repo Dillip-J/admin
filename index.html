@@ -22,9 +22,9 @@
 
             <form id="admin-login-form">
                 
-                <div class="alert-box alert-error mb-3" id="login-error" style="display: none;">
+                <div class="alert-box alert-error mb-3 hidden" id="login-error">
                     <i class="fa-solid fa-circle-exclamation"></i>
-                    <div>Invalid admin credentials. Please try again.</div>
+                    <div id="login-error-text">Invalid admin credentials. Please try again.</div>
                 </div>
 
                 <div class="input-group mb-3">
@@ -54,8 +54,9 @@
 
         </div>
     </div>
-    <script src="js/script.js"></script>
-    <script src="js/auth_guard.js"></script>
-    <script src="js/admin-login.js"></script>
+    
+    <script src="js/config.js"></script>         
+    <script src="js/admin-guard.js"></script>    
+    <script src="js/admin-login.js"></script>    
 </body>
 </html>

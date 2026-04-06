@@ -279,3 +279,53 @@ body.bg-main {
 [data-theme="dark"] .icon-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
+/* ==========================================
+   --- 🚨 THE MISSING UTILITY CLASSES 🚨 ---
+   ========================================== */
+
+/* 1. View Toggling (Critical for Tab Switching) */
+.hidden { 
+    display: none !important; 
+}
+
+/* 2. Stat Badge Colors */
+.stats-badge.badge-blue {
+    background-color: #EFF6FF; 
+    color: #3B82F6; 
+    border-color: #BFDBFE;
+}
+[data-theme="dark"] .stats-badge.badge-blue {
+    background-color: rgba(59, 130, 246, 0.1);
+    border-color: rgba(59, 130, 246, 0.2);
+}
+
+.stats-badge.badge-red {
+    background-color: #FEF2F2; 
+    color: #EF4444; 
+    border-color: #FECACA;
+}
+[data-theme="dark"] .stats-badge.badge-red {
+    background-color: rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+/* 3. Empty States for JavaScript Injections */
+.empty-state-cell {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-secondary);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #CBD5E1;
+    margin-bottom: 16px;
+    display: block;
+}
+[data-theme="dark"] .feature-icon {
+    color: #334155;
+}
+
+.text-success {
+    color: var(--success-green, #10B981) !important;
+}

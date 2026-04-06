@@ -41,7 +41,7 @@
             <header class="admin-app-header">
                 <div class="header-search">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search providers or patients...">
+                    <input type="text" id="admin-global-search" placeholder="Search providers or patients...">
                 </div>
                 <div class="header-actions">
                     <button id="theme-toggle" class="icon-button" aria-label="Toggle Dark Mode">
@@ -53,7 +53,7 @@
 
             <div class="admin-app-content">
 
-                <section id="view-verify">
+                <section id="view-verify" class="view-section">
                     <div class="content-header">
                         <div>
                             <h1>Verification Queue</h1>
@@ -65,13 +65,13 @@
                         </div>
                 </section>
 
-                <section id="view-quality" style="display: none;">
+                <section id="view-quality" class="view-section hidden">
                     <div class="content-header">
                         <div>
                             <h1>Monitoring & Quality</h1>
                             <p>Track active provider performance and patient ratings.</p>
                         </div>
-                        <div class="stats-badge" style="background-color: #EFF6FF; color: #3B82F6; border-color: #BFDBFE;">
+                        <div class="stats-badge badge-blue">
                             <span id="active-provider-count">0</span> Active
                         </div>
                     </div>
@@ -93,13 +93,13 @@
                     </div>
                 </section>
 
-                <section id="view-complaints" style="display: none;">
+                <section id="view-complaints" class="view-section hidden">
                     <div class="content-header">
                         <div>
                             <h1>Patient Complaints</h1>
                             <p>Investigate and resolve reported issues to maintain trust.</p>
                         </div>
-                        <div class="stats-badge" style="background-color: #FEF2F2; color: #EF4444; border-color: #FECACA;">
+                        <div class="stats-badge badge-red">
                             <span id="open-complaints-count">0</span> Open
                         </div>
                     </div>
@@ -110,8 +110,10 @@
             </div>
         </div>
     </div>
-    <script src="js/script.js"></script>
-    <script src="js/auth_guard.js"></script>
-    <script src="js/admin-dashboard.js"></script>
+
+    <script src="js/config.js"></script>          
+    <script src="js/admin-guard.js"></script>     
+    <script src="js/admin-script.js"></script>    
+    <script src="js/admin-dash.js"></script>      
 </body>
 </html>

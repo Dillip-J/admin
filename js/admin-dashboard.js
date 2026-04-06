@@ -1,18 +1,4 @@
-// admin-dash.js
-// ==========================================
-// 🚨 SMART API ROUTER
-// ==========================================
-let API_BASE;
-
-if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
-    // 💻 LOCAL MODE: You are testing on your laptop
-    API_BASE = 'http://127.0.0.1:8000';
-    console.log("🔌 Connected to LOCAL Backend");
-} else {
-    // 🌍 LIVE MODE: You are on the real internet
-    API_BASE = 'https://backend-depolyment-1.onrender.com'; 
-    console.log("☁️ Connected to LIVE Cloud Backend");
-}
+// js/admin-dash.js
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -21,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const adminToken = localStorage.getItem('admin_access_token');
     if (!adminToken) {
-        window.location.href = 'admin-login.html';
+        window.location.replace('admin-login.html');
         return;
     }
 
@@ -31,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('admin_access_token');
             localStorage.removeItem('currentAdmin');
-            window.location.href = 'admin-login.html';
+            window.location.replace('admin-login.html');
         });
     }
 
@@ -47,17 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchTab(tabKey) {
         Object.values(tabs).forEach(tab => {
             if(tab.btn) tab.btn.classList.remove('active');
-            if(tab.view) tab.view.style.display = 'none';
+            if(tab.view) tab.view.classList.add('hidden'); // Replaced inline CSS
         });
         if(tabs[tabKey].btn) tabs[tabKey].btn.classList.add('active');
-        if(tabs[tabKey].view) tabs[tabKey].view.style.display = 'block';
+        if(tabs[tabKey].view) tabs[tabKey].view.classList.remove('hidden');
         if(tabs[tabKey].render) tabs[tabKey].render(); 
     }
 
     if(tabs.verify.btn) tabs.verify.btn.addEventListener('click', (e) => { e.preventDefault(); switchTab('verify'); });
     if(tabs.quality.btn) tabs.quality.btn.addEventListener('click', (e) => { e.preventDefault(); switchTab('quality'); });
     if(tabs.complaints.btn) tabs.complaints.btn.addEventListener('click', (e) => { e.preventDefault(); switchTab('complaints'); });
-
 
     // ==========================================
     // --- 3. VERIFICATION QUEUE (API CONNECTED) ---
@@ -73,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.status === 401) {
                 localStorage.removeItem('admin_access_token');
-                window.location.href = 'admin-login.html';
+                window.location.replace('admin-login.html');
                 return;
             }
 
@@ -119,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (error) {
             console.error("Queue fetch error:", error);
-            if(list) list.innerHTML = `<p style="color:red; text-align:center;">Failed to connect to server.</p>`;
+            if(list) list.innerHTML = `<p class="error-text text-center">Failed to connect to server.</p>`; // Replaced inline CSS
         }
     }
 
@@ -159,18 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const confirmReject = confirm(`Are you sure you want to REJECT this provider?`);
             if (!confirmReject) return;
             alert(`Reject UI triggered. (Requires Phase 2 DELETE route in backend)`);
-            document.getElementById(`card-${providerId}`).style.display = 'none';
+            document.getElementById(`card-${providerId}`).classList.add('hidden'); // Replaced inline CSS
         }
     };
 
     // ==========================================
     // --- 4. QUALITY & COMPLAINTS (PHASE 2 MOCKS) ---
     // ==========================================
+    // Replaced inline CSS with generic layout classes
     function renderQuality() {
         const tbody = document.getElementById('quality-list');
         if(!tbody) return;
-        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px;">
-            <i class="fa-solid fa-hammer" style="font-size: 2rem; color: #9CA3AF; margin-bottom: 10px;"></i>
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-state-cell">
+            <i class="fa-solid fa-hammer feature-icon"></i>
             <br>Provider Quality Metrics require a Phase 2 Backend Update (Provider Ratings Table).
         </td></tr>`;
     }
@@ -178,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderComplaints() {
         const list = document.getElementById('complaints-list');
         if(!list) return;
-        list.innerHTML = `<div class="empty-queue" style="text-align:center; padding: 40px;">
-            <i class="fa-solid fa-face-smile" style="font-size:3rem; color: var(--success-green); margin-bottom:16px;"></i>
+        list.innerHTML = `<div class="empty-queue">
+            <i class="fa-solid fa-face-smile feature-icon text-success"></i>
             <h2>Phase 2 Feature</h2>
             <p>The Complaints Table needs to be created in the PostgreSQL database.</p>
         </div>`;
@@ -195,12 +181,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const query = e.target.value.trim();
             
             if (query.length < 1) {
-                // If you have a function to reset the dashboard, call it here
                 return;
             }
 
             try {
-                // SECURED: Added Authorization Header!
                 const response = await fetch(`${API_BASE}/admin/global-admin-search?q=${query}`, {
                     method: 'GET',
                     headers: { 'Authorization': `Bearer ${adminToken}` }
@@ -211,9 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const data = await response.json();
                 console.log("Admin Search Results:", data);
                 
-                // Assuming you have a function to handle rendering these results:
                 if (typeof updateAdminDashboardTables === "function") {
-                    updateAdminDashboardTables(data); // FastAPI returns { users: [], providers: [], bookings: [] }
+                    updateAdminDashboardTables(data); 
                 }
 
             } catch (err) {

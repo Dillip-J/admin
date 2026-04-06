@@ -1,4 +1,4 @@
-// js/admin/admin-script.js
+// js/admin-script.js
 
 // ==========================================
 // --- 0. INSTANT THEME MANAGER (Prevents Flashing) ---
@@ -51,20 +51,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!toast) {
             toast = document.createElement('div');
             toast.id = 'network-toast';
-            toast.style.cssText = 'position:fixed; bottom:20px; right:20px; padding:12px 24px; border-radius:8px; color:#fff; font-weight:600; z-index:9999; transition:all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.2);';
+            toast.className = 'network-toast'; // Replaced ALL inline CSS with this class
             document.body.appendChild(toast);
         }
         
+        // Wipe old classes
+        toast.classList.remove('online', 'offline', 'fade-out');
+
         if (isOnline) {
-            toast.style.backgroundColor = '#10B981'; // Green
+            toast.classList.add('online');
             toast.innerHTML = '<i class="fa-solid fa-wifi"></i> Connection Restored';
             setTimeout(() => { 
-                toast.style.opacity = '0'; 
+                toast.classList.add('fade-out'); 
                 setTimeout(() => toast.remove(), 300); 
             }, 3000);
         } else {
-            toast.style.backgroundColor = '#EF4444'; // Red
-            toast.style.opacity = '1';
+            toast.classList.add('offline');
             toast.innerHTML = '<i class="fa-solid fa-plane-up"></i> System Offline. Check Connection.';
         }
     }
