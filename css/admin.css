@@ -1,0 +1,281 @@
+/* ========================================= */
+/* --- Full Screen Admin SaaS Layout ---     */
+/* ========================================= */
+
+/* OVERRIDE: Force the body to be full height and hide scrollbars.
+  This ensures payment.css global body rules don't break the admin layout. 
+*/
+/* ========================================= */
+/* --- ADMIN COLOR PALETTE (STANDALONE) ---  */
+/* ========================================= */
+:root {
+    --page-bg: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --border-color: #E2E8F0;
+    --brand-blue: #0284C7; /* Admin Blue */
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --success-green: #10B981;
+    --input-bg: #F1F5F9;
+}
+
+[data-theme="dark"] {
+    --page-bg: #020617; /* Extra dark for admin */
+    --card-bg: #0F172A;
+    --border-color: #1E293B;
+    --brand-blue: #38BDF8;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --input-bg: #020617;
+}
+
+/* ... KEEP ALL THE REST OF YOUR ADMIN.CSS BELOW THIS ... */
+body.bg-main {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    overflow: hidden !important; 
+    background-color: var(--page-bg) !important;
+}
+
+.admin-app-wrapper {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--page-bg);
+}
+
+/* --- Dark Admin Sidebar --- */
+.admin-app-sidebar {
+    width: 260px;
+    height: 100vh;
+    background-color: #0F172A; /* Slate 900 */
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.sidebar-brand {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #1E293B;
+}
+
+.logo-circle.bg-dark {
+    width: 36px; height: 36px;
+    background-color: #1E293B;
+    color: #38BDF8; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+}
+
+.brand-text strong { display: block; color: white; font-size: 1.1rem; }
+.brand-text span { color: #94A3B8; font-size: 0.8rem; }
+
+.sidebar-nav {
+    flex: 1;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Sidebar */
+.sidebar-nav::-webkit-scrollbar { width: 6px; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+.nav-item {
+    padding: 12px 16px;
+    border-radius: 8px;
+    color: #94A3B8;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+}
+
+.nav-item i { font-size: 1.1rem; width: 20px; text-align: center; }
+.nav-item:hover { background-color: #1E293B; color: white; }
+.nav-item.active { background-color: #0284C7; color: white; }
+
+.sidebar-bottom {
+    padding: 16px;
+    border-top: 1px solid #1E293B;
+}
+
+.btn-sidebar-outline {
+    background: transparent;
+    border: 1px solid #334155;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background 0.2s;
+    width: 100%;
+}
+.btn-sidebar-outline:hover { background: #1E293B; }
+.text-red { color: #F87171 !important; border-color: rgba(248, 113, 113, 0.3) !important; }
+.text-red:hover { background: rgba(248, 113, 113, 0.1) !important; }
+
+/* --- Main App Area --- */
+.admin-app-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+}
+
+.admin-app-header {
+    padding: 16px 40px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    height: 72px; /* Fixed header height */
+    box-sizing: border-box;
+}
+
+.header-search {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--input-bg);
+    padding: 10px 16px; border-radius: 8px;
+    border: 1px solid var(--border-color);
+    width: 300px;
+    transition: border-color 0.2s;
+}
+.header-search:focus-within { border-color: var(--brand-blue); }
+.header-search i { color: var(--text-secondary); }
+.header-search input { border: none; background: transparent; color: var(--text-primary); outline: none; width: 100%; font-family: inherit;}
+
+.header-actions { display: flex; align-items: center; gap: 20px; }
+.admin-avatar { width: 40px; height: 40px; background: #0F172A; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+[data-theme="dark"] .admin-avatar { background: #38BDF8; color: #0F172A; }
+
+.admin-app-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for Main Content */
+.admin-app-content::-webkit-scrollbar { width: 8px; }
+.admin-app-content::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+.admin-app-content::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* --- Shared Content Styles --- */
+.content-header {
+    display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px;
+}
+.content-header h1 { font-size: 1.8rem; color: var(--text-primary); margin-bottom: 8px; }
+.content-header p { color: var(--text-secondary); font-size: 0.95rem; }
+
+.stats-badge {
+    background-color: #FFFBEB; color: #D97706; border: 1px solid #FDE68A;
+    padding: 8px 16px; border-radius: 20px; font-weight: 600; font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+[data-theme="dark"] .stats-badge { background-color: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2); color: #FCD34D; }
+
+/* --- Verification Cards --- */
+.verification-list { display: flex; flex-direction: column; gap: 20px; max-width: 900px; }
+.verify-card {
+    background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px;
+    padding: 24px; display: flex; flex-direction: column; gap: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.verify-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
+
+.verify-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.verify-info h3 { font-size: 1.25rem; color: var(--text-primary); margin-bottom: 6px; }
+.verify-info p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 16px; }
+
+.verify-meta { display: flex; gap: 12px; font-size: 0.85rem; color: var(--text-secondary); flex-wrap: wrap;}
+.meta-pill { background: var(--page-bg); padding: 6px 12px; border-radius: 6px; display: flex; align-items: center; gap: 6px; border: 1px solid var(--border-color); }
+.meta-pill i { color: var(--brand-blue); }
+
+.verify-actions { display: flex; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 20px; }
+.btn-approve { background: var(--success-green); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;}
+.btn-reject { background: #EF4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: background 0.2s;}
+.btn-view-docs { background: transparent; color: var(--brand-blue); border: 1px solid var(--brand-blue); padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-right: auto; transition: background 0.2s;}
+
+.btn-approve:hover { background: #059669; }
+.btn-reject:hover { background: #DC2626; }
+.btn-view-docs:hover { background: rgba(59, 130, 246, 0.1); }
+
+/* Empty States */
+.empty-queue { text-align: center; padding: 80px 20px; color: var(--text-secondary); background: var(--card-bg); border: 1px dashed var(--border-color); border-radius: 12px; max-width: 900px;}
+.empty-queue i { font-size: 3rem; margin-bottom: 16px; color: #CBD5E1; }
+[data-theme="dark"] .empty-queue i { color: #334155; }
+
+/* --- Admin Data Tables (Quality Tab) --- */
+.admin-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+.admin-table { width: 100%; border-collapse: collapse; text-align: left; }
+.admin-table th { background-color: var(--page-bg); padding: 16px 24px; font-size: 0.85rem; color: var(--text-secondary); font-weight: 600; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+.admin-table td { padding: 20px 24px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); font-size: 0.95rem; vertical-align: middle; }
+.admin-table tbody tr:hover { background-color: rgba(0,0,0,0.01); }
+[data-theme="dark"] .admin-table tbody tr:hover { background-color: rgba(255,255,255,0.02); }
+
+.table-provider-info { display: flex; align-items: center; gap: 12px; }
+.table-avatar { width: 40px; height: 40px; border-radius: 50%; background: #EFF6FF; color: #3B82F6; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 0.9rem; }
+[data-theme="dark"] .table-avatar { background: rgba(59, 130, 246, 0.15); color: #60A5FA; }
+
+.rating-badge { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.rating-badge i { color: #F59E0B; }
+.rating-na { color: var(--text-secondary); font-size: 0.85rem; font-style: italic;}
+
+.btn-suspend { background: transparent; color: #EF4444; border: 1px solid #EF4444; padding: 6px 16px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+.btn-suspend:hover { background: #EF4444; color: white; }
+
+/* --- Complaint Cards --- */
+#view-complaints .verification-list { max-width: 900px; }
+.complaint-card { background: var(--card-bg); border: 1px solid #FECACA; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px; border-left: 4px solid #EF4444; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);}
+[data-theme="dark"] .complaint-card { border-color: rgba(239, 68, 68, 0.3); border-left: 4px solid #EF4444; }
+
+.complaint-header { display: flex; justify-content: space-between; align-items: flex-start; }
+.complaint-header h3 { font-size: 1.15rem; color: var(--text-primary); margin-bottom: 4px; }
+.complaint-header p { font-size: 0.9rem; color: var(--text-secondary); }
+
+.complaint-body { background: var(--page-bg); padding: 20px; border-radius: 8px; font-size: 0.95rem; color: var(--text-primary); font-style: italic; border: 1px solid var(--border-color); line-height: 1.6;}
+.complaint-actions { display: flex; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 20px;}
+/* ==========================================
+   --- ICON BUTTON OVERRIDE ---
+   ========================================== */
+.icon-button {
+    background: transparent;
+    border: none;
+    font-size: 1.4rem; /* Makes the moon/sun bigger */
+    color: var(--text-main, #374151); 
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%; /* Makes the hover effect circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Subtle grey circle when you hover over it */
+.icon-button:hover {
+    background-color: rgba(0, 0, 0, 0.05); 
+}
+
+/* Dark Mode hover adjustments */
+[data-theme="dark"] .icon-button {
+    color: #F3F4F6;
+}
+[data-theme="dark"] .icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}

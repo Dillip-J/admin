@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Admin - Control Center</title>
+     
+    <link rel="stylesheet" href="css/admin.css"> 
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-main">
+
+    <div class="admin-app-wrapper">
+        
+        <aside class="admin-app-sidebar">
+            <div class="sidebar-brand">
+                <div class="logo-circle bg-dark"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="brand-text">
+                    <strong>Vision Admin</strong>
+                    <span>Control Center</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" id="tab-verify"><i class="fa-solid fa-user-check"></i> Verification Queue</a>
+                <a href="#" class="nav-item" id="tab-quality"><i class="fa-solid fa-chart-line"></i> Monitoring & Quality</a>
+                <a href="#" class="nav-item" id="tab-complaints"><i class="fa-solid fa-triangle-exclamation"></i> Complaints</a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <button class="btn-sidebar-outline w-100 text-red" id="admin-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> Exit System
+                </button>
+            </div>
+        </aside>
+
+        <div class="admin-app-main">
+            
+            <header class="admin-app-header">
+                <div class="header-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search providers or patients...">
+                </div>
+                <div class="header-actions">
+                    <button id="theme-toggle" class="icon-button" aria-label="Toggle Dark Mode">
+                        <i class="fa-regular fa-moon" id="theme-icon"></i>
+                    </button>
+                    <div class="admin-avatar">A</div>
+                </div>
+            </header>
+
+            <div class="admin-app-content">
+
+                <section id="view-verify">
+                    <div class="content-header">
+                        <div>
+                            <h1>Verification Queue</h1>
+                            <p>Review and approve pending healthcare provider applications.</p>
+                        </div>
+                        <div class="stats-badge"><span id="pending-count">0</span> Pending</div>
+                    </div>
+                    <div class="verification-list" id="verification-list">
+                        </div>
+                </section>
+
+                <section id="view-quality" style="display: none;">
+                    <div class="content-header">
+                        <div>
+                            <h1>Monitoring & Quality</h1>
+                            <p>Track active provider performance and patient ratings.</p>
+                        </div>
+                        <div class="stats-badge" style="background-color: #EFF6FF; color: #3B82F6; border-color: #BFDBFE;">
+                            <span id="active-provider-count">0</span> Active
+                        </div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Provider</th>
+                                    <th>Category</th>
+                                    <th>Consultations</th>
+                                    <th>Avg Rating</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quality-list">
+                                </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="view-complaints" style="display: none;">
+                    <div class="content-header">
+                        <div>
+                            <h1>Patient Complaints</h1>
+                            <p>Investigate and resolve reported issues to maintain trust.</p>
+                        </div>
+                        <div class="stats-badge" style="background-color: #FEF2F2; color: #EF4444; border-color: #FECACA;">
+                            <span id="open-complaints-count">0</span> Open
+                        </div>
+                    </div>
+                    <div class="verification-list" id="complaints-list">
+                        </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+    <script src="js/auth_guard.js"></script>
+    <script src="js/admin-dashboard.js"></script>
+</body>
+</html>
