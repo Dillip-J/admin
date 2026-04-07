@@ -25,7 +25,7 @@
 
         // 3. If they are logged in and on the login page, push to dashboard
         if (currentPage === 'admin-login.html' || currentPage === '') {
-            window.location.replace('admin-dash.html'); 
+            window.location.replace('admin.html'); 
         }
 
     } catch (error) {
