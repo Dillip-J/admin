@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('currentAdmin', JSON.stringify(data.admin));
 
                 // 3. Teleport to Dashboard (FIXED: points to admin-dash.html and uses replace)
-                window.location.replace('admin-dash.html');
+                window.location.replace('admin.html');
 
             } catch (error) {
                 console.error("Admin Login Error:", error);

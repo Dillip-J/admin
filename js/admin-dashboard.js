@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const adminToken = localStorage.getItem('admin_access_token');
     if (!adminToken) {
-        window.location.replace('admin-login.html');
+        window.location.replace('index.html'); // FIXED: Points to your actual login page
         return;
     }
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('admin_access_token');
             localStorage.removeItem('currentAdmin');
-            window.location.replace('admin-login.html');
+            window.location.replace('index.html'); // FIXED: Points to your actual login page
         });
     }
 
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function switchTab(tabKey) {
         Object.values(tabs).forEach(tab => {
             if(tab.btn) tab.btn.classList.remove('active');
-            if(tab.view) tab.view.classList.add('hidden'); // Replaced inline CSS
+            if(tab.view) tab.view.classList.add('hidden'); 
         });
         if(tabs[tabKey].btn) tabs[tabKey].btn.classList.add('active');
         if(tabs[tabKey].view) tabs[tabKey].view.classList.remove('hidden');
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.status === 401) {
                 localStorage.removeItem('admin_access_token');
-                window.location.replace('admin-login.html');
+                window.location.replace('index.html'); // FIXED: Points to your actual login page
                 return;
             }
 
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (error) {
             console.error("Queue fetch error:", error);
-            if(list) list.innerHTML = `<p class="error-text text-center">Failed to connect to server.</p>`; // Replaced inline CSS
+            if(list) list.innerHTML = `<p class="error-text text-center">Failed to connect to server.</p>`; 
         }
     }
 
@@ -144,14 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const confirmReject = confirm(`Are you sure you want to REJECT this provider?`);
             if (!confirmReject) return;
             alert(`Reject UI triggered. (Requires Phase 2 DELETE route in backend)`);
-            document.getElementById(`card-${providerId}`).classList.add('hidden'); // Replaced inline CSS
+            document.getElementById(`card-${providerId}`).classList.add('hidden'); 
         }
     };
 
     // ==========================================
     // --- 4. QUALITY & COMPLAINTS (PHASE 2 MOCKS) ---
     // ==========================================
-    // Replaced inline CSS with generic layout classes
     function renderQuality() {
         const tbody = document.getElementById('quality-list');
         if(!tbody) return;
