@@ -126,3 +126,22 @@
     width: 100%;
     box-sizing: border-box;
 }
+/* Pushes the text away from the right edge so it doesn't overlap the eye */
+.input-with-icon input {
+    padding-right: 40px !important; 
+}
+
+/* Pins the eye icon to the right side */
+.toggle-password-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%); /* Centers it perfectly vertically */
+    cursor: pointer;
+    color: var(--text-secondary, #6b7280);
+    z-index: 10; /* Ensures it is clickable */
+}
+
+.toggle-password-icon:hover {
+    color: var(--brand-blue, #2563eb);
+}

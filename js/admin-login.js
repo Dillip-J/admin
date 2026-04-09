@@ -57,3 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+// ==========================================
+// --- Password Visibility Toggle (Admin) ---
+// ==========================================
+const toggleAdminPasswordBtn = document.getElementById('toggle-admin-password');
+const adminPasswordInput = document.getElementById('admin-password');
+
+if (toggleAdminPasswordBtn && adminPasswordInput) {
+    toggleAdminPasswordBtn.addEventListener('click', function () {
+        // Swap between password and text
+        const type = adminPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        adminPasswordInput.setAttribute('type', type);
+        
+        // Swap the FontAwesome icon
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+}
