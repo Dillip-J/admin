@@ -1,38 +1,45 @@
 // js/admin-guard.js
+
 (function adminGuard() {
     const token = localStorage.getItem('admin_access_token');
+    const currentUrl = window.location.href;
     
-    // In your setup, the login page is index.html
-    let currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    // Check exactly which page we are on
+    const isDashboard = currentUrl.includes('admin.html');
+    const isAdminLogin = currentUrl.includes('admin/index.html') || 
+                         (currentUrl.includes('/admin') && !isDashboard);
 
-    // 1. If NO token, force them to stay on the login page (index.html)
+    // 1. IF NO TOKEN: Kick them out of the dashboard
     if (!token) {
-        if (currentPage !== 'index.html' && currentPage !== '') {
+        if (isDashboard) {
+            console.warn("No Admin Token: Redirecting to Admin Login...");
             window.location.replace('index.html');
         }
-        return;
+        return; 
     }
 
     try {
+        // 2. TOKEN EXISTS: Let's check who they are
         const payload = JSON.parse(window.atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
         
-        // 2. STRICT ROLE CHECK: Kick out patients and doctors back to the MAIN public site
+        // 3. STRICT ROLE CHECK: Kick out patients and doctors back to the MAIN public site
         if (payload.role !== 'admin') {
-            console.warn("Security Alert: Unauthorized Role.");
+            console.warn("Security Alert: Unauthorized Role. Redirecting to Public Site...");
             localStorage.removeItem('admin_access_token');
             window.location.replace('https://dillip-j.github.io/Vision-24-7/'); 
             return;
         }
 
-        // 3. If they ARE an admin, and they land on the login page, teleport them to the dashboard
-        if (currentPage === 'index.html' || currentPage === '') {
-            window.location.replace('admin.html'); // Teleports to your actual dashboard
+        // 4. IF VALID ADMIN: Push them to the dashboard if they are sitting on the login page
+        if (isAdminLogin) {
+            window.location.replace('admin.html'); 
         }
 
     } catch (error) {
         // If the token is corrupted, destroy it and kick them back to login
+        console.error("Corrupted admin token destroyed.");
         localStorage.removeItem('admin_access_token');
-        if (currentPage !== 'index.html' && currentPage !== '') {
+        if (isDashboard) {
             window.location.replace('index.html');
         }
     }
