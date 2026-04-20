@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
     const adminToken = localStorage.getItem('admin_access_token');
     if (!adminToken) {
-        window.location.replace('index.html'); // FIXED: Points to your actual login page
+        window.location.replace('index.html'); 
         return;
     }
 
@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('admin_access_token');
             localStorage.removeItem('currentAdmin');
-            window.location.replace('index.html'); // FIXED: Points to your actual login page
+            window.location.replace('index.html'); 
         });
     }
 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.status === 401) {
                 localStorage.removeItem('admin_access_token');
-                window.location.replace('index.html'); // FIXED: Points to your actual login page
+                window.location.replace('index.html'); 
                 return;
             }
 
