@@ -1,9 +1,10 @@
 // js/admin-login.js
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const loginForm = document.getElementById('admin-login-form');
     const errorBox = document.getElementById('login-error');
-    const errorText = document.getElementById('login-error-text'); // Optional: Add this ID to a span inside your error box to show exact errors
+    const errorText = document.getElementById('login-error-text');
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (e) => {
@@ -13,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = document.getElementById('admin-password').value;
             const submitBtn = loginForm.querySelector('button[type="submit"]');
 
-            // Reset UI (NO INLINE CSS)
+            // Reset UI
             if (errorBox) errorBox.classList.add('hidden');
             
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = "Authenticating...";
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Authenticating...';
             submitBtn.disabled = true;
 
             try {
@@ -31,8 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) {
                     const errorData = await response.json();
                     if (errorBox) {
-                        errorBox.classList.remove('hidden'); // NO INLINE CSS
-                        // If you have a span for the text, inject the exact FastAPI error:
+                        errorBox.classList.remove('hidden');
                         if (errorText) errorText.textContent = errorData.detail || "Invalid credentials.";
                     }
                     return;
@@ -44,33 +44,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('admin_access_token', data.access_token);
                 localStorage.setItem('currentAdmin', JSON.stringify(data.admin));
 
-                // 3. Teleport to Dashboard (FIXED: points to admin-dash.html and uses replace)
+                // 3. Teleport to Dashboard
                 window.location.replace('admin.html');
 
             } catch (error) {
                 console.error("Admin Login Error:", error);
                 alert("Server connection failed. The server is currently disconnected.");
             } finally {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = true; // Keep disabled if teleporting
             }
         });
     }
 });
-// ==========================================
-// --- Password Visibility Toggle (Admin) ---
-// ==========================================
-const toggleAdminPasswordBtn = document.getElementById('toggle-admin-password');
-const adminPasswordInput = document.getElementById('admin-password');
-
-if (toggleAdminPasswordBtn && adminPasswordInput) {
-    toggleAdminPasswordBtn.addEventListener('click', function () {
-        // Swap between password and text
-        const type = adminPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        adminPasswordInput.setAttribute('type', type);
-        
-        // Swap the FontAwesome icon
-        this.classList.toggle('fa-eye');
-        this.classList.toggle('fa-eye-slash');
-    });
-}

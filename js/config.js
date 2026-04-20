@@ -1,4 +1,4 @@
-// config.js
+// js/config.js
 let API_BASE;
 
 if (
@@ -14,4 +14,4 @@ if (
   console.log("☁️ Connected to LIVE Cloud Backend");
 }
 
-export default API_BASE;
+// 🚨 Do NOT use export default API_BASE here!

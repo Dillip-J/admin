@@ -6,14 +6,13 @@
     
     // Check exactly which page we are on
     const isDashboard = currentUrl.includes('admin.html');
-    const isAdminLogin = currentUrl.includes('admin/index.html') || 
-                         (currentUrl.includes('/admin') && !isDashboard);
+    const isAdminLogin = currentUrl.includes('admin-login.html');
 
     // 1. IF NO TOKEN: Kick them out of the dashboard
     if (!token) {
         if (isDashboard) {
             console.warn("No Admin Token: Redirecting to Admin Login...");
-            window.location.replace('index.html');
+            window.location.replace('admin-login.html');
         }
         return; 
     }
@@ -40,7 +39,7 @@
         console.error("Corrupted admin token destroyed.");
         localStorage.removeItem('admin_access_token');
         if (isDashboard) {
-            window.location.replace('index.html');
+            window.location.replace('admin-login.html');
         }
     }
 })();
